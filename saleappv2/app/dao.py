@@ -1,11 +1,11 @@
 from app.models import Category, Product
 
 
-def load_categories():
+def get_categories():
     return Category.query.all()
 
 
-def load_products(kw=None):
+def get_products(kw):
     products = Product.query
 
     if kw:
