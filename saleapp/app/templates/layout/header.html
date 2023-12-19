@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">BÁN HÀNG TRỰC TUYẾN</a>
+        <a class="navbar-brand" href="#">Bán hàng trực tuyến</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -8,21 +8,52 @@
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link
-                        {%if 'category_id' not in request.args%}
+                        {% if 'category_id' not in request.args %}
                             active
                         {% endif %}"
                        href="/">Trang chủ</a>
                 </li>
                 {% for c in categories %}
                     <li class="nav-item">
-    {#                "Index" is name in file "index.py"#}
+                        {#                "Index" is name in file "index.py"#}
                         <a class="nav-link
-                            {%if 'category_id' in request.args and c.id == request.args.category_id|int %}
+                            {% if 'category_id' in request.args and c.id == request.args.category_id|int %}
                                 active
                             {% endif %}"
                            href="{{ url_for("index", category_id=c.id) }}">{{ c.name }}</a>
                     </li>
                 {% endfor %}
+
+                {% if current_user.is_authenticated %}
+                    <li class="nav-item" style="color: #dd3333; padding: 0.5rem 1rem">
+                        {{ current_user.name }}
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="{{ url_for("log_in_view") }}">Đăng nhập</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    {% if current_user.is_authenticated %}
+                        <a class="nav-link"
+                           href="/log-out">Đăng xuất</a>
+                    {% else %}
+                        <a class="nav-link"
+                           href="/sign-up">Đăng ký</a>
+                    {% endif %}
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for("cart_view") }}">
+                        <i class="fa fa-shopping-cart" style="font-size:20px">
+                            <span id="counter-cart" style="color: inherit"
+                                  class="badge badge-info">{{ counter_cart }}</span>
+                        </i>
+                    </a>
+                </li>
             </ul>
             <form class="d-flex" method="get" action="/">
                 <input class="form-control me-2" type="text" name="keyWord" placeholder="Nhập từ khóa...">

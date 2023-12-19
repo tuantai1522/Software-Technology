@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <h4 class="card-title">{{ p.name }}</h4>
                         <p class="card-text">{{ p.price }}</p>
-                        <a href="#" class="btn btn-primary">Buy</a>
+                        <a onclick="addToCart({{ p.id }}, '{{ p.name }}', {{ p.price }})" href="#" class="btn btn-primary">Buy</a>
                     </div>
                 </div>
             </div>
